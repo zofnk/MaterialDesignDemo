@@ -14,14 +14,18 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/imgMain"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:scaleType="centerCrop"/>
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/image"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="6dp"
-            android:text="描述"/>
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="美丽的小姐姐"
+            android:textStyle="bold"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>

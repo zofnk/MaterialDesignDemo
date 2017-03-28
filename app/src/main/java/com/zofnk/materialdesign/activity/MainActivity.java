@@ -1,11 +1,14 @@
 package com.zofnk.materialdesign.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -118,7 +121,11 @@ public class MainActivity extends AppCompatActivity {
         mainAdapter.setOnItemClickListence(new OnItemClickListener() {
             @Override
             public void setOnclickListence(View view, int position) {
-                TabActivity.start(MainActivity.this);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,
+                        view.findViewById(R.id.imgMain), MainActivity.this.getString(R.string.transition_book_img));
+                ActivityCompat.startActivity(MainActivity.this,
+                        new Intent(MainActivity.this, TabActivity.class)
+                        , options.toBundle());
             }
         });
     }

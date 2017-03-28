@@ -41,7 +41,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.VH> {
 
     @Override
     public int getItemCount() {
-        return 100;
+        return 20;
     }
 
     public void setOnItemClickListence(OnItemClickListener l) {
