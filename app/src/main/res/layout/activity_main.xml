@@ -73,7 +73,7 @@
             app:fabSize="normal"
             app:layout_anchor="@+id/rv"
             app:layout_anchorGravity="right|bottom"
-            app:layout_behavior="com.lh16808.app.materialdesigndemo.ScrollAwareFABBehavior"
+            app:layout_behavior="com.zofnk.materialdesign.ScrollAwareFABBehavior"
             app:rippleColor="?colorPrimaryDark"/>
 
     </android.support.design.widget.CoordinatorLayout>
