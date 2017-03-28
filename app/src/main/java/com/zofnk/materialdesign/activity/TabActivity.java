@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.zofnk.materialdesign.R;
@@ -21,12 +22,15 @@ import com.zofnk.materialdesign.fragment.FindFragment;
 import com.zofnk.materialdesign.fragment.HomeFragment;
 import com.zofnk.materialdesign.fragment.MineFragment;
 
+import static com.zofnk.materialdesign.R.id.toolbar;
+
 public class TabActivity extends AppCompatActivity {
 
     private CollapsingToolbarLayout mCollapsingToolBarLayout;
     private ImageView mIcon;
     private ViewPager mVp;
     private TabLayout mTabLayout;
+    private Toolbar mToolbar;
 
     public static void start(Context context) {
         Intent starter = new Intent(context, TabActivity.class);
@@ -57,6 +61,9 @@ public class TabActivity extends AppCompatActivity {
         mVp = (ViewPager) findViewById(R.id.viewPager);
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mIcon = (ImageView) findViewById(R.id.imgIcon);
+        mToolbar = (Toolbar) findViewById(toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void init() {
@@ -64,6 +71,12 @@ public class TabActivity extends AppCompatActivity {
         mVp.setAdapter(new MainPageAdapter(getSupportFragmentManager(), mFragments, tabs));
         mTabLayout.setOnTabSelectedListener(new ViewPagerOnTabSelectedListener());
         mTabLayout.setupWithViewPager(mVp);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     public void setToolBarBackground(@DrawableRes int resId) {
