@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zofnk.materialdesign.OnItemClickListener;
 import com.zofnk.materialdesign.R;
 import com.zofnk.materialdesign.adapter.MainAdapter;
 
@@ -97,14 +98,14 @@ public class MainActivity extends AppCompatActivity {
         mFloatingActionButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar snackbar = Snackbar.make(mCollapsingToolbarLayout,"弹出了",Snackbar.LENGTH_SHORT)
+                Snackbar snackbar = Snackbar.make(mCollapsingToolbarLayout, "弹出了", Snackbar.LENGTH_SHORT)
                         .setAction("你点我啊", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                make(mCollapsingToolbarLayout,"轻点疼",Snackbar.LENGTH_SHORT).show();
+                                make(mCollapsingToolbarLayout, "轻点疼", Snackbar.LENGTH_SHORT).show();
                             }
                         });
-                ((TextView)snackbar.getView().findViewById(R.id.snackbar_text)).setTextColor(0xff03A9F4);
+                ((TextView) snackbar.getView().findViewById(R.id.snackbar_text)).setTextColor(0xff03A9F4);
                 snackbar.show();
             }
         });
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(lm);
         MainAdapter mainAdapter = new MainAdapter(this);
         mRecyclerView.setAdapter(mainAdapter);
-        mainAdapter.setOnItemClickListence(new MainAdapter.OnItemClickListence() {
+        mainAdapter.setOnItemClickListence(new OnItemClickListener() {
             @Override
             public void setOnclickListence(View view, int position) {
                 TabActivity.start(MainActivity.this);

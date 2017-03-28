@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zofnk.materialdesign.OnItemClickListener;
 import com.zofnk.materialdesign.R;
-
 
 /**
  * Created by Administrator on 2017/3/28.
@@ -16,7 +16,7 @@ import com.zofnk.materialdesign.R;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.VH> {
 
     private Context mContext;
-    private OnItemClickListence l;
+    private OnItemClickListener l;
 
     public MainAdapter(Context context) {
         mContext = context;
@@ -44,12 +44,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.VH> {
         return 20;
     }
 
-    public void setOnItemClickListence(OnItemClickListence l) {
+    public void setOnItemClickListence(OnItemClickListener l) {
         this.l = l;
-    }
-
-    public interface OnItemClickListence {
-        void setOnclickListence(View view, int position);
     }
 
     class VH extends RecyclerView.ViewHolder {
