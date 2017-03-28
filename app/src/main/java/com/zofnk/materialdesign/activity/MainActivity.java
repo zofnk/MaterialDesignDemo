@@ -1,4 +1,4 @@
-package com.lh16808.app.materialdesigndemo.activity;
+package com.zofnk.materialdesign.activity;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -18,8 +18,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lh16808.app.materialdesigndemo.R;
-import com.lh16808.app.materialdesigndemo.adapter.MainAdapter;
+import com.lh16808.app.materialdesign.R;
+import com.zofnk.materialdesign.adapter.MainAdapter;
 
 import static android.support.design.widget.Snackbar.make;
 
