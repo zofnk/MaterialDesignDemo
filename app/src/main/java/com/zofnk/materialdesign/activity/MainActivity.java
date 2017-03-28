@@ -1,5 +1,6 @@
 package com.zofnk.materialdesign.activity;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -98,14 +99,15 @@ public class MainActivity extends AppCompatActivity {
         mFloatingActionButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar snackbar = Snackbar.make(mCollapsingToolbarLayout, "弹出了", Snackbar.LENGTH_SHORT)
-                        .setAction("你点我啊", new View.OnClickListener() {
+                Snackbar snackbar = Snackbar.make(mCollapsingToolbarLayout, "哈喽~", Snackbar.LENGTH_SHORT)
+                        .setAction("快点这里", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                make(mCollapsingToolbarLayout, "轻点疼", Snackbar.LENGTH_SHORT).show();
+                                make(mCollapsingToolbarLayout, "啊~啊~~", Snackbar.LENGTH_SHORT).show();
                             }
                         });
-                ((TextView) snackbar.getView().findViewById(R.id.snackbar_text)).setTextColor(0xff03A9F4);
+                ((TextView) snackbar.getView().findViewById(R.id.snackbar_text)).setTextColor(Color.YELLOW);
+                snackbar.getView().setBackgroundResource(R.drawable.bg_snackbar);
                 snackbar.show();
             }
         });
