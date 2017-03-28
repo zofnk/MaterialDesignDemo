@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.lh16808.app.materialdesign.R;
+import com.zofnk.materialdesign.R;
 import com.zofnk.materialdesign.adapter.MainAdapter;
 
 /**

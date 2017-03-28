@@ -9,7 +9,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-import com.lh16808.app.materialdesign.R;
+import com.zofnk.materialdesign.R;
+
 
 public class EditActivity extends AppCompatActivity {
 

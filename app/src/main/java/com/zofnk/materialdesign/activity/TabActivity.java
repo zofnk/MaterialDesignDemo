@@ -9,7 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.lh16808.app.materialdesign.R;
+import com.zofnk.materialdesign.R;
 import com.zofnk.materialdesign.adapter.MainPageAdapter;
 import com.zofnk.materialdesign.fragment.FindFragment;
 import com.zofnk.materialdesign.fragment.HomeFragment;

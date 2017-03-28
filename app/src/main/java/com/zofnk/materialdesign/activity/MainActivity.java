@@ -18,7 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lh16808.app.materialdesign.R;
+import com.zofnk.materialdesign.R;
 import com.zofnk.materialdesign.adapter.MainAdapter;
 
 import static android.support.design.widget.Snackbar.make;
