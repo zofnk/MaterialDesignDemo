@@ -84,15 +84,15 @@ public class TabActivity extends AppCompatActivity {
             Log.e("onTabSelected : ", "" + tab.getPosition());
             switch (tab.getPosition()) {
                 case 0:
-                    setToolbarTitle("Home Detial");
+                    setToolbarTitle("Home Detail");
 //                        setToolBarBackground(R.mipmap.image);
                     break;
                 case 1:
-                    setToolbarTitle("Find Detial");
+                    setToolbarTitle("Find Detail");
 //                        setToolBarBackground(R.mipmap.image1);
                     break;
                 case 2:
-                    setToolbarTitle("Mine Detial");
+                    setToolbarTitle("Mine Detail");
 //                        setToolBarBackground(R.mipmap.image);
                     break;
                 default:
