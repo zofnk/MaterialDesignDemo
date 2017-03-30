@@ -1,7 +1,9 @@
 package com.zofnk.materialdesign.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -12,7 +14,6 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,11 +23,24 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zofnk.materialdesign.entity.DataResponse;
+import com.zofnk.materialdesign.http.HomeDataLoader;
 import com.zofnk.materialdesign.OnItemClickListener;
 import com.zofnk.materialdesign.R;
 import com.zofnk.materialdesign.adapter.MainAdapter;
 
+import java.util.HashMap;
+import java.util.List;
+
+import rx.functions.Action1;
+
 import static android.support.design.widget.Snackbar.make;
+import static com.zofnk.materialdesign.constants.ApiConfig.MAX_RESULT;
+import static com.zofnk.materialdesign.constants.ApiConfig.NEED_ALLLIST;
+import static com.zofnk.materialdesign.constants.ApiConfig.NEED_CONTENT;
+import static com.zofnk.materialdesign.constants.ApiConfig.NEED_HTML;
+import static com.zofnk.materialdesign.constants.ApiConfig.SHOWAPI_APPID;
+import static com.zofnk.materialdesign.constants.ApiConfig.SHOWAPI_SIGN;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton mFloatingActionButton;
     private FloatingActionButton mFloatingActionButton2;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private ProgressDialog mProgressDialog;
+    private HomeDataLoader mHomeDataLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +99,9 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         setSupportActionBar(mToolBar);
         setToolbarTitle("Demo");
+        mHomeDataLoader = new HomeDataLoader();
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Loading Datas");
         mDrawerlayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         mActionBarDrawerToggle = new ActionBarDrawerToggle(
                 this,
@@ -114,15 +133,46 @@ public class MainActivity extends AppCompatActivity {
                 snackbar.show();
             }
         });
+
+        loadData();
+    }
+
+    private void loadData() {
+
+        HashMap<String, String> options = new HashMap<>();
+        options.put(NEED_CONTENT, "1");
+        options.put(MAX_RESULT, "30");
+        options.put(NEED_HTML, "0");
+        options.put(NEED_ALLLIST, "0");
+        options.put(SHOWAPI_APPID, "33820");
+        options.put(SHOWAPI_SIGN, "7675d59be01e4fabb7838234c50b72f4");
+        mProgressDialog.show();
+
+        mHomeDataLoader.getHomeList(options).subscribe(new Action1<List<DataResponse.ShowapiResBodyBean.PagebeanBean.ContentlistBean>>() {
+            @Override
+            public void call(List<DataResponse.ShowapiResBodyBean.PagebeanBean.ContentlistBean> been) {
+                mProgressDialog.dismiss();
+                initRecyclerView(been);
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+                throwable.getMessage();
+            }
+        });
+    }
+
+    private void initRecyclerView(List<DataResponse.ShowapiResBodyBean.PagebeanBean.ContentlistBean> contentlist) {
         LinearLayoutManager lm = new LinearLayoutManager(this);
+        MainAdapter mainAdapter = new MainAdapter(this, contentlist);
         mRecyclerView.setLayoutManager(lm);
-        MainAdapter mainAdapter = new MainAdapter(this);
         mRecyclerView.setAdapter(mainAdapter);
         mainAdapter.setOnItemClickListence(new OnItemClickListener() {
             @Override
             public void setOnclickListence(View view, int position) {
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this,
-                        view.findViewById(R.id.imgMain), MainActivity.this.getString(R.string.transition_book_img));
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        MainActivity.this, view.findViewById(R.id.imgMain),
+                        MainActivity.this.getString(R.string.transition_book_img));
                 ActivityCompat.startActivity(MainActivity.this,
                         new Intent(MainActivity.this, TabActivity.class)
                         , options.toBundle());
