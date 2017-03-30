@@ -8,7 +8,6 @@ import java.util.List;
 
 public class DataResponse {
 
-
     private int showapi_res_code;
     private String showapi_res_error;
     private ShowapiResBodyBean showapi_res_body;

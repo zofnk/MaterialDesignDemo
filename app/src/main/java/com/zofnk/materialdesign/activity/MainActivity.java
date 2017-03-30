@@ -32,6 +32,7 @@ import com.zofnk.materialdesign.adapter.MainAdapter;
 import java.util.HashMap;
 import java.util.List;
 
+import rx.Observable;
 import rx.functions.Action1;
 
 import static android.support.design.widget.Snackbar.make;
@@ -39,8 +40,10 @@ import static com.zofnk.materialdesign.constants.ApiConfig.MAX_RESULT;
 import static com.zofnk.materialdesign.constants.ApiConfig.NEED_ALLLIST;
 import static com.zofnk.materialdesign.constants.ApiConfig.NEED_CONTENT;
 import static com.zofnk.materialdesign.constants.ApiConfig.NEED_HTML;
+import static com.zofnk.materialdesign.constants.ApiConfig.PAGER;
 import static com.zofnk.materialdesign.constants.ApiConfig.SHOWAPI_APPID;
 import static com.zofnk.materialdesign.constants.ApiConfig.SHOWAPI_SIGN;
+import static com.zofnk.materialdesign.constants.ApiConfig.TITLE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private ProgressDialog mProgressDialog;
     private HomeDataLoader mHomeDataLoader;
+    private String mTitle;
+    private int mPager = 1;
+    private int mSize = 40;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,15 +145,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadData() {
 
-        HashMap<String, String> options = new HashMap<>();
+        HashMap<String, Object> options = new HashMap<>();
         options.put(NEED_CONTENT, "1");
-        options.put(MAX_RESULT, "30");
+        options.put(MAX_RESULT, mSize);
         options.put(NEED_HTML, "0");
         options.put(NEED_ALLLIST, "0");
+        options.put(PAGER, mPager);
+        options.put(TITLE, "");
         options.put(SHOWAPI_APPID, "33820");
         options.put(SHOWAPI_SIGN, "7675d59be01e4fabb7838234c50b72f4");
         mProgressDialog.show();
-
         mHomeDataLoader.getHomeList(options).subscribe(new Action1<List<DataResponse.ShowapiResBodyBean.PagebeanBean.ContentlistBean>>() {
             @Override
             public void call(List<DataResponse.ShowapiResBodyBean.PagebeanBean.ContentlistBean> been) {

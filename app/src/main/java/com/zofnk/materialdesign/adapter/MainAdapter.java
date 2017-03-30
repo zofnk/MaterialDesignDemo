@@ -2,9 +2,11 @@ package com.zofnk.materialdesign.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.zofnk.materialdesign.entity.DataResponse;
 import com.zofnk.materialdesign.OnItemClickListener;
@@ -12,6 +14,9 @@ import com.zofnk.materialdesign.R;
 import com.zofnk.materialdesign.activity.MainActivity;
 
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Administrator on 2017/3/28.
@@ -39,7 +44,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.VH> {
 
     @Override
     public void onBindViewHolder(VH holder, final int position) {
-
+        holder.mTvTitle.setText(!TextUtils.isEmpty(mContentlist.get(position).getTitle()) ?
+                mContentlist.get(position).getTitle() : "暂无数据");
         if (l != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -61,8 +67,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.VH> {
 
     class VH extends RecyclerView.ViewHolder {
 
+        @Bind(R.id.tvTitle)
+        TextView mTvTitle;
+
         public VH(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

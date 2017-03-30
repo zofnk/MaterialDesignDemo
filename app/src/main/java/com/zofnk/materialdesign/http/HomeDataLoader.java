@@ -20,7 +20,7 @@ public class HomeDataLoader extends ObjectLoader {
         mApiService = RetrofitServiceManager.getInstance().create(ApiService.class);
     }
 
-    public Observable<List<DataResponse.ShowapiResBodyBean.PagebeanBean.ContentlistBean>> getHomeList(HashMap<String, String> options) {
+    public Observable<List<DataResponse.ShowapiResBodyBean.PagebeanBean.ContentlistBean>> getHomeList(HashMap<String, Object> options) {
         return observe(mApiService.getHomeDatas(options))
                 .map(new Func1<DataResponse, List<DataResponse.ShowapiResBodyBean.PagebeanBean.ContentlistBean>>() {
                     @Override
@@ -29,5 +29,4 @@ public class HomeDataLoader extends ObjectLoader {
                     }
                 });
     }
-
 }

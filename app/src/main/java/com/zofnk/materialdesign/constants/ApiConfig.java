@@ -13,4 +13,6 @@ public interface ApiConfig {
     String NEED_ALLLIST = "needAllList";
     String SHOWAPI_APPID = "showapi_appid";
     String SHOWAPI_SIGN = "showapi_sign";
+    String PAGER = "pager";
+    String TITLE = "title";
 }

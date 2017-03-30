@@ -15,6 +15,6 @@ import rx.Observable;
 public interface ApiService {
 
     @GET("109-35")
-    Observable<DataResponse> getHomeDatas(@QueryMap Map<String, String> options);
+    Observable<DataResponse> getHomeDatas(@QueryMap Map<String, Object> options);
 
 }
