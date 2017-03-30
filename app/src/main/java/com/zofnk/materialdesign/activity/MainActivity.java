@@ -1,6 +1,7 @@
 package com.zofnk.materialdesign.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,17 +10,23 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +36,7 @@ import com.zofnk.materialdesign.OnItemClickListener;
 import com.zofnk.materialdesign.R;
 import com.zofnk.materialdesign.adapter.MainAdapter;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,6 +44,7 @@ import rx.Observable;
 import rx.functions.Action1;
 
 import static android.support.design.widget.Snackbar.make;
+import static com.zofnk.materialdesign.R.id.usernameWrapper;
 import static com.zofnk.materialdesign.constants.ApiConfig.MAX_RESULT;
 import static com.zofnk.materialdesign.constants.ApiConfig.NEED_ALLLIST;
 import static com.zofnk.materialdesign.constants.ApiConfig.NEED_CONTENT;
@@ -57,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private ProgressDialog mProgressDialog;
     private HomeDataLoader mHomeDataLoader;
-    private String mTitle;
+    private String mTitle = "";
     private int mPager = 1;
     private int mSize = 40;
 
@@ -121,7 +130,37 @@ public class MainActivity extends AppCompatActivity {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditActivity.start(MainActivity.this);
+                final TextInputLayout tlySearch = (TextInputLayout) getLayoutInflater().from(MainActivity.this).inflate(R.layout.et_search, null);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle(" ")
+                        .setView(tlySearch, 30, 0, 30, 0)
+                        .setPositiveButton("搜索", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface anInterface, int i) {
+
+                                boolean mShowing;
+                                try {
+                                    String str = tlySearch.getEditText().getText().toString().trim();
+                                    if (TextUtils.isEmpty(str)) {
+                                        tlySearch.setError("内容不能为空");
+                                        mShowing = false;
+                                    } else if (str.length() >= 3) {
+                                        tlySearch.setError("长度不能超过2个");
+                                        mShowing = false;
+                                    } else {
+                                        mShowing = true;
+                                        search(str);
+                                    }
+                                    //点击后dialog不消失
+                                    Field field = anInterface.getClass().getSuperclass().getSuperclass().getDeclaredField("mShowing");
+                                    field.setAccessible(true);
+                                    field.set(anInterface, mShowing);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        })
+                        .show();
             }
         });
         mFloatingActionButton2.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +182,11 @@ public class MainActivity extends AppCompatActivity {
         loadData();
     }
 
+    private void search(String value) {
+        mTitle = value;
+        loadData();
+    }
+
     private void loadData() {
 
         HashMap<String, Object> options = new HashMap<>();
@@ -151,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
         options.put(NEED_HTML, "0");
         options.put(NEED_ALLLIST, "0");
         options.put(PAGER, mPager);
-        options.put(TITLE, "");
+        options.put(TITLE, mTitle);
         options.put(SHOWAPI_APPID, "33820");
         options.put(SHOWAPI_SIGN, "7675d59be01e4fabb7838234c50b72f4");
         mProgressDialog.show();

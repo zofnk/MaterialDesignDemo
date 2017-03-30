@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zofnk.materialdesign.entity.DataResponse;
@@ -44,8 +45,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.VH> {
 
     @Override
     public void onBindViewHolder(VH holder, final int position) {
-        holder.mTvTitle.setText(!TextUtils.isEmpty(mContentlist.get(position).getTitle()) ?
-                mContentlist.get(position).getTitle() : "暂无数据");
+        if (mContext instanceof MainActivity) {
+            holder.mTvTitle.setText(!TextUtils.isEmpty(mContentlist.get(position).getTitle()) ?
+                    mContentlist.get(position).getTitle() : "暂无数据");
+        }
         if (l != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -69,6 +72,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.VH> {
 
         @Bind(R.id.tvTitle)
         TextView mTvTitle;
+        @Bind(R.id.imgMain)
+        ImageView mImgMain;
 
         public VH(View itemView) {
             super(itemView);
